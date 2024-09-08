@@ -20,7 +20,7 @@ fff2=6.6493;
 fff3=7.8574;
 fff4=11.8083;
 
-K=1/(t2/pi);%K为衔接段函数的缩放比例,无需修改
+K=1/(t2/pi);
 cos_x1=((fff1-fff2)/2)*cos(K*(x-40*t1))+fff1+(fff2-fff1)/2;
 cos_x2=((fff2-fff3)/2)*cos(K*(x-91*t1))+fff2+(fff3-fff2)/2;
 cos_x3=((fff3-fff4)/2)*cos(K*(x-142*t1))+fff3+(fff4-fff3)/2;

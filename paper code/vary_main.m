@@ -1,18 +1,15 @@
 clear;clc;
-t1=15000;%t1是时不变时间
-t2=2000;%t2是衔接时间
+t1=15000;
+t2=2000;
 Ts=1;
 t = (0:0.01:3*t1+2*t2)';
 u = [myfun_b0(t,t1,t2),myfun_a0(t,t1,t2),(t>=0)-1,myfun_t0(t,t1,t2)];
-sim('Vary_Systemu');%如若修改t1和t2,需在simulink中将仿真时长改为对应的3*t1+2*t2时间
+sim('Vary_Systemu');
 y1=ans.y1;
 fcorn=10000;
 sfcor=17001;
 g_1=FCORR(y1(sfcor:sfcor+fcorn-1),30,30,fcorn,1);%Fcor
 G1=filt(g_1(1:300),1);
-% g1=impulse(G1,300);
-% [transfer1] = LSe(5,40,g1(1:300),1);
-% G1=transfer1;
 g1=impulse(G1,100);
 gg_1 = impulse(1/G1,300);
 gg=impulse(G1,300);
@@ -20,8 +17,6 @@ d=154;
 KP=0.745875669585536;
 KI=0.00622991619120585;
 KD=11.8431061933714;
-% KZQ=KP+KI*Ts*filt([0 1],[1 -1])+(KD*filt([1 -1],1))/Ts;
-% KZQ=filt([0.1107 -0.2261 0.1156],[1 -0.2 -0.8]);
 KZQ=filt([5.0030  -10.2067    5.2115],[1 -0.3 -0.7]);
 if d>9
     yh=9;
@@ -40,8 +35,7 @@ n_j=0;
 if d>6
     maxer=100;
 for select=1:1:6
-IN;   %开始对N进行估计
-%N没有积分器
+IN;   
 if n_j==0
     er1=zeros(1,10);
     er2=zeros(1,10);
@@ -203,8 +197,6 @@ xx2(j,:)=x2;
     end
 end
 
-
-%N有积分器
 if n_j==1
     er1=zeros(1,10);
     er2=zeros(1,10);
@@ -232,14 +224,7 @@ nad1=impulse(NAD1,300);
 know1=impulse(NAD1/G1,300);
 TAD1=(NAD1/G1-1)/KZQ;
 tad1=impulse(TAD1,300);
-% figure(100);
-% plot(nad1,'r');
-% hold on;
-% plot(n,'g');
-% figure(101);
-% plot(tad1,'r');
-% hold on;
-% plot(t,'g');
+
 
 gg_2=impulse(1/NAD1,300);
 for i=yh+1:1:yh+4
@@ -381,7 +366,6 @@ xx2(j,:)=x2;
     end
 end
 
-%对比目标函数值，确定对N最终的估计
 er_l=length(er1);
 miner1=100;
 miner2=100;
@@ -412,7 +396,7 @@ if miner1>miner2
     fxx=xx2;
 end
 nx=fxx(ner,:);
-%N没有积分器
+
 if n_j==0
     NAD=gg(1)*filt([1 nx(1)],1);
 for i=2:1:kk+1
@@ -429,7 +413,7 @@ for i=1:1:d
     tad(i)=0;
 end
 end
-%N有积分器
+
 if n_j==1
     NAD=gg(1)*filt([1 nx(1)],[1 -1]);
 for i=2:1:kk+1

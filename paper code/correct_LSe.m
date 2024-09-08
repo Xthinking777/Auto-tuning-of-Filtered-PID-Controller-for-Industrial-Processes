@@ -1,7 +1,4 @@
 function [transfer] = correct_LSe(dimension,rank,impulse_data,iter)
-%LSE 此处显示有关此函数的摘要
-% 此处显示详细说明
-% syms a;syms b;syms c;syms d;syms e;
 x=[];
 hankel=[];
 for i = 1 : rank
@@ -22,12 +19,11 @@ a2 = a_matrix(dimension+1,a_result);
 g2 = impulse_data(1:dimension+1);
 b_result = a2*g2;
 b_result = b_result';
-%%%%%%%%%%%%%%%修正:固定分子,搜索分母,使脉冲响应系数偏差平方和达到最小%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-t=impulse_data';%脉冲响应系数粗估计值
-n=length(impulse_data);%脉冲响应系数数据量长度
-% iter=1;%iter为迭代次数
+t=impulse_data';
+n=length(impulse_data);
+
 for i=1:iter
-    switch dimension %分母未知数x(n)个数n=dimension+1,即[x(1)…x(n)]
+    switch dimension 
         case 1
             f1=@(x)sum((longDiv(b_result,[x(1) x(2)],n)-t).^2);
         case 2
@@ -41,9 +37,8 @@ for i=1:iter
     end
     x0=a_result;
     [x]= fminunc(f1,x0);
-    a_result=x;%用搜索优化后的分母代替原分母
-    %%%%%%%%%%%%%%%修正:固定分子,搜索分母,使脉冲响应系数偏差平方和达到最小%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    switch dimension %分母未知数x(n)个数n=dimension+1,即[x(1)…x(n)]
+    a_result=x;
+    switch dimension 
         case 1
             f2=@(x)sum((longDiv([x(1) x(2)],a_result,n)-t).^2);
         case 2
@@ -57,23 +52,7 @@ for i=1:iter
     end
     x0=b_result;
     [x]= fminunc(f2,x0);
-    b_result=x;%用搜索优化后的分母代替原分母
+    b_result=x;
 end
-%
-% for i=1:1
-% %%%%%%%%%%%%%%%第二次优化%%%%%%%%%%%%%%%
-% f3=@(x)sum((longDiv(b_result,[x(1) x(2) x(3) x(4) x(5)],n)-t).^2);
-% x0=a_result;
-% [x]= fminunc(f3,x0);
-% a_result=x;
-%
-% f4=@(x)sum((longDiv([x(1) x(2) x(3) x(4) x(5)],a_result,n)-t).^2);
-% x0=b_result;
-% [x]= fminunc(f4,x0);
-% b_result=x;%用搜索优化后的分母代替原分母
-% %%%%%%%%%%%%%%%第二次优化%%%%%%%%%%%%%%%
-% end
-%剔除显著为0参数
-% for e = 1 : dimension+1
-%
+
 transfer = filt(b_result/a_result(1),a_result/a_result(1));%分母首项归一化

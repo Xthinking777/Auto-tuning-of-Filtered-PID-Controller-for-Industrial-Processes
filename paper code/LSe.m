@@ -1,6 +1,4 @@
 function [transfer] = LSe(dimension,rank,impulse_data,G_cl)
-%LSE 此处显示有关此函数的摘要
-%   此处显示详细说明
 hankel=[];
 for i = 1 : rank
     for j = 1 :dimension
@@ -19,7 +17,7 @@ a2 = a_matrix(dimension+1,a_result);
 g2 = impulse_data(1:dimension+1);
 b_result = a2*g2;
 b_result = b_result';
-%剔除显著为0参数
+
 % for e = 1 : dimension+1
 %     if abs(a_result(e))<0.005
 %         a_result(e)=0;
@@ -31,10 +29,9 @@ b_result = b_result';
 %     end
 % end
 
-%真实脉冲响应系数
 real_data = impulse(G_cl,100);
 %figure(count),plot(real_data,'-o')
-%Lse估计所得脉冲响应系数
+
 transfer = filt(b_result,a_result);
 estimate_data = impulse(transfer,100);
 %figure(count+2),plot(estimate_data,'-o')

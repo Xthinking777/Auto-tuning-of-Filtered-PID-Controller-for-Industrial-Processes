@@ -1,9 +1,8 @@
 clear
 sim('Pid_MVC_final');
-Data_Am=20000;%Amount of output data for close-loop system
-Data_G=300;%Closed loop impulse response truncated data
+Data_Am=20000;
+Data_G=300;
 
-%初始化，设置参数
 K(1,:)=[2.840536169, -4.405454757, 1.748374348];
 K(2,:)=[1.842048236, -3.385018982, 1.543110148];
 % K(2,:)=[1.842048236, -3.385018982, 1.553110148];
@@ -44,7 +43,7 @@ if d>9
 end
 csssd1=zeros(kd,10);
 
-T=filt(C(number),[1 D(number)])*filt([zeros(1,d) 1],1);  %对象传递函数
+T=filt(C(number),[1 D(number)])*filt([zeros(1,d) 1],1);  
 N=filt([I(number) Q(number)],[1 B(number,1) B(number,2) B(number,3) B(number,4)]);   %扰动传递函数
 % N=filt([1 -0.2],[1 -0.99])*filt(1,[1 -0.5])*filt(1,[1 -0.3])*filt(1,[1 0.4]);
 % tn=rand(1,5)*2-1;
@@ -53,7 +52,7 @@ N=filt([I(number) Q(number)],[1 B(number,1) B(number,2) B(number,3) B(number,4)]
 % tf=[-0.2 -0.8 0.6 0.4 -0.5];
 % F=filt([1 tn(1)],1)*filt(1,[1 tn(2)])*filt(1,[1 tn(3)])*filt(1,[1 tn(4)])*filt(1,[1 tn(5)])*filt([zeros(1,d) 1],1);
 F=[I(number) Q(number)];
-KZQ=filt(K(number,:),[1 -1]);   %控制器
+KZQ=filt(K(number,:),[1 -1]);   
 
 if number==4
 T=filt([0 0 0 0 0 0 0 0.004679],[1 -0.923])*filt([1 0.9355],[1 -0.887]);
@@ -91,7 +90,7 @@ end
 
 
 
-%定义权重
+
 hf1=zeros(1,10);   
 hf2=zeros(1,10);
 
@@ -101,10 +100,10 @@ end
 for i=1:1:yh+4
     hf2(i)=0;
 end
-%fcor算法估计闭环脉冲响应系数G
-y_1=Fcor(KZQ,T,N,y_a);%Generate output data
-g_1=Get_f_ya(y_1(1:Data_Am),F);%Fcor
-g_1=fc(y_1(1:Data_Am));%Fcor
+
+y_1=Fcor(KZQ,T,N,y_a);
+g_1=Get_f_ya(y_1(1:Data_Am),F);
+g_1=fc(y_1(1:Data_Am));
 
 G1=filt(g_1(1:Data_G),1);
 G=N/(1+T*KZQ);
@@ -166,7 +165,7 @@ end
 % xx=fmincon(f, x0, A, b, Aeq, beq, VLB, VUB);
 xxx2=a3/a2;
 
-%最终对N是否含有积分环节的判断
+
 % n_j=0;
 % if zp==0&&abs(xx-1)<0.01
 %     n_j=1;
@@ -182,7 +181,7 @@ g_1=fc(y_1(1:Data_Am));%Fcor
 G1=filt(g_1(1:Data_G),1);
 G=N/(1+T*KZQ);
 % G1=G;
-gg = impulse(G1,30) ;  %真实的N的脉冲响应系数
+gg = impulse(G1,30) ;  
 gg_1 = impulse(1/G1,30);
 
 n_j=1;
@@ -200,12 +199,12 @@ if n_j==1
 end
 % n_j=0;
 % gg_1=impulse(1/G1,30);
-%%小延时算例
+
 
 if d<=7
     select=d-1;
-IN;   %开始对N进行估计
-%N没有积分器
+IN;  
+
 if n_j==0
     er1=zeros(1,kd);
     er2=zeros(1,kd);
@@ -379,7 +378,6 @@ xx2(j,:)=x2;
 end
 
 
-%N有积分器
 if n_j==1
     er1=zeros(1,kd);
     er2=zeros(1,kd);
@@ -567,7 +565,6 @@ xx2(j,:)=x2;
     end
 end
 
-%对比目标函数值，确定对N最终的估计
 er_l=length(er1);
 miner1=100;
 miner2=100;
@@ -598,7 +595,7 @@ if miner1>miner2
     fxx=xx2;
 end
 nx=fxx(ner,:);
-%N没有积分器
+
 if n_j==0
     NAD=gg(1)*filt([1 nx(1)],1);
 for i=2:1:kk+1
@@ -619,7 +616,7 @@ for i=1:1:d
     tad(i)=0;
 end
 end
-%N有积分器
+
 if n_j==1
     NAD=gg(1)*filt([1 nx(1)],1)*filt([1 -xxx2],[1 -xxx1]);
 for i=2:1:kk+1
@@ -645,14 +642,14 @@ end
 
 
 
-%%大延时算例
+
 
 if d>7
     maxer=100;
     NADR=N;
 for select=1:1:6
-IN;   %开始对N进行估计
-%N没有积分器
+IN;  
+
 if n_j==0
     er1=zeros(1,kd);
     er2=zeros(1,kd);
@@ -825,8 +822,6 @@ xx2(j,:)=x2;
     end
 end
 
-
-%N有积分器
 if n_j==1
     er1=zeros(1,kd);
     er2=zeros(1,kd);
@@ -1014,7 +1009,6 @@ xx2(j,:)=x2;
     end
 end
 
-%对比目标函数值，确定对N最终的估计
 er_l=length(er1);
 miner1=100;
 miner2=100;
@@ -1045,7 +1039,7 @@ if miner1>miner2
     fxx=xx2;
 end
 nx=fxx(ner,:);
-%N没有积分器
+
 if n_j==0
     NAD=gg(1)*filt([1 nx(1)],1);
 for i=2:1:kk+1
@@ -1066,7 +1060,7 @@ for i=1:1:d
     tad(i)=0;
 end
 end
-%N有积分器
+
 if n_j==1
     NAD=gg(1)*filt([1 nx(1)],1)*filt([1 -xxx2],[1 -xxx1]);
 for i=2:1:kk+1
@@ -1109,7 +1103,7 @@ for i=1:1:d
     tad(i)=0;
 end
 end
-%画图程序
+
 % [transfer1] = correct_LSe(3,40,tad(d+1:300),1);
 [transfer1] =LSe(3,40,tad(d+1:300),1);
 tadd=impulse(transfer1*filt([zeros(1,d) 1],1),300);

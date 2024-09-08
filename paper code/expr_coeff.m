@@ -1,10 +1,4 @@
-%{
-Function: expr_coeff
-Description: 提取任意符号表达式中，任意子表达式的系数
-Input: 任意符号表达式expr(一维矩阵，元素个数可以大于1)；任意符号子表达式subExpr(一维矩阵，元素个数可以大于1)
-Output: 任意符号表达式中，任意子表达式的系数coeff
-Author: Marc Pony(marc_pony@163.com)
-%}
+
 function coeff = expr_coeff(expr, subExpr)
 
 if size(expr, 1) > 1 && size(expr, 2) > 1

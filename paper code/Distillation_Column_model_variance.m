@@ -16,12 +16,12 @@ end
 for i=1:1:yh+4
     hf2(i)=1;
 end
-t1=7500;%t1是时不变时间
-t2=100;%t2是衔接时间
+t1=7500;
+t2=100;
 Ts=0.5;
 t = (0:0.1:20000)';
 u = [myfun_bbbb0(t,t1,t2),myfun_cccc0(t,t1,t2),myfun_dddd0(t,t1,t2),myfun_eeee0(t,t1,t2),myfun_ffff(t,t1,t2)];
-sim('cep51');%如若修改t1和t2,需在simulink中将仿真时长改为对应的3*t1+2*t2时间
+sim('cep51');
 y1=ans.y11;
 % y2=ans.y22;
 % y3=ans.y33;

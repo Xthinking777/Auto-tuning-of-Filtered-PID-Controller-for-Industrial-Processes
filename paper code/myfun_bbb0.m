@@ -20,7 +20,7 @@ bbb2=7.4145;
 bbb3=8.8544;
 bbb4=13.1747;
 
-K=1/(t2/pi);%K为衔接段函数的缩放比例,无需修改
+K=1/(t2/pi);
 cos_x1=((bbb1-bbb2)/2)*cos(K*(x-40*t1))+bbb1+(bbb2-bbb1)/2;
 cos_x2=((bbb2-bbb3)/2)*cos(K*(x-91*t1))+bbb2+(bbb3-bbb2)/2;
 cos_x3=((bbb3-bbb4)/2)*cos(K*(x-142*t1))+bbb3+(bbb4-bbb3)/2;

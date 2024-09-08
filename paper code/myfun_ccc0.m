@@ -20,7 +20,7 @@ ccc2=0;
 ccc3=-0.2;
 ccc4=-0.6;
 
-K=1/(t2/pi);%K为衔接段函数的缩放比例,无需修改
+K=1/(t2/pi);
 cos_x1=((ccc1-ccc2)/2)*cos(K*(x-40*t1))+ccc1+(ccc2-ccc1)/2;
 cos_x2=((ccc2-ccc3)/2)*cos(K*(x-91*t1))+ccc2+(ccc3-ccc2)/2;
 cos_x3=((ccc3-ccc4)/2)*cos(K*(x-142*t1))+ccc3+(ccc4-ccc3)/2;

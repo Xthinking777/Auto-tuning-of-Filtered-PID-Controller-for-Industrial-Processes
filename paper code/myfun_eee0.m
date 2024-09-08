@@ -16,7 +16,7 @@ eee2=0;
 eee3=-0.2;
 eee4=-0.6;
 
-K=1/(t2/pi);%K为衔接段函数的缩放比例,无需修改
+K=1/(t2/pi);
 cos_x1=((eee1-eee2)/2)*cos(K*(x-40*t1))+eee1+(eee2-eee1)/2;
 cos_x2=((eee2-eee3)/2)*cos(K*(x-91*t1))+eee2+(eee3-eee2)/2;
 cos_x3=((eee3-eee4)/2)*cos(K*(x-142*t1))+eee3+(eee4-eee3)/2;

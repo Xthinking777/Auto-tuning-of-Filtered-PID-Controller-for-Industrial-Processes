@@ -20,7 +20,7 @@ ddd2=-14.0064;
 ddd3=-16.6394;
 ddd4=-24.9051;
 
-K=1/(t2/pi);%K为衔接段函数的缩放比例,无需修改
+K=1/(t2/pi);
 cos_x1=((ddd1-ddd2)/2)*cos(K*(x-40*t1))+ddd1+(ddd2-ddd1)/2;
 cos_x2=((ddd2-ddd3)/2)*cos(K*(x-91*t1))+ddd2+(ddd3-ddd2)/2;
 cos_x3=((ddd3-ddd4)/2)*cos(K*(x-142*t1))+ddd3+(ddd4-ddd3)/2;

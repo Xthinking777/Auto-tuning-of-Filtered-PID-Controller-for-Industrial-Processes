@@ -1,7 +1,7 @@
 
 
 
-if select==6%Case6
+if select==6
     
     kk=6;
     
@@ -27,7 +27,7 @@ if select==6%Case6
 % 
 end
 
-if select==5%Case5
+if select==5
     
         kk=5;
         
@@ -53,8 +53,8 @@ if select==5%Case5
 
 end
 
-if select==4%Case4
-    
+if select==4
+
         kk=4;
         
   f1=@(x)hf1(1)*(gg_1(1)*(1))^2+...
@@ -79,7 +79,7 @@ if select==4%Case4
 % 
 end
 
-if select==3%Case3
+if select==3
     
         kk=3;
         
@@ -105,7 +105,7 @@ if select==3%Case3
 % 
 end
 
-if select==2%Case2
+if select==2
     
         kk=2;
         
@@ -131,7 +131,7 @@ if select==2%Case2
 
 end
 
-if select==1%Case2
+if select==1
     
         kk=1;
         
